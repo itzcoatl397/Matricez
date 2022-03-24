@@ -1,0 +1,160 @@
+#include <iostream>
+#include <stdlib.h> // new  / delay
+
+using namespace std;
+
+// funciones
+
+void leer();
+void mostrarMatrizSumar(int**, int**);
+void sumarMatriz(int**, int**, int, int,int);
+void mostrarMatrizFinal(int**, int, int);
+
+// creo un punteros
+int** matrizA, ** matrizB,**matrizC;
+int filasA, filasB, columnaA, columnaB;
+
+int main(int argc, char const* argv[])
+{
+
+    leer();
+
+    // limpiamos memoria
+    for (int i = 0; i < filasB; i++)
+    {
+        delete[] matrizB[i];
+    }
+    delete[] matrizB;
+    for (int i = 0; i < filasA; i++)
+    {
+        delete[] matrizA[i];
+    }
+    delete[] matrizA;
+
+    return 0;
+}
+
+void leer()
+{
+
+    cout << "******************************************" << endl;
+    cout << "* Matrices  de  Matrices  ( n x n )           *" << endl;
+    cout << "******************************************" << endl;
+
+    cout << "Ingrese el numero de  filas de  matriz A : ";
+    cin >> filasA;
+    cout << "Ingrese el numero de columnas  de  matriz A : ";
+    cin >> columnaA;
+    cout << " " << endl;
+    cout << "Ingrese el numero de  filas de  matriz B: ";
+    cin >> filasB;
+    cout << "Ingrese el numero de  columnas  de  matriz B : ";
+    cin >> columnaB;
+    cout << " " << endl;
+    if (columnaB == filasA) {
+
+        matrizA = new int* [filasA]; // reservo memoria  para filas
+
+        for (int i = 0; i < filasA; i++)
+        {
+            matrizA[i] = new int[columnaA]; // reservando memoria  para las columnas
+        }
+        matrizB = new int* [filasB];
+        // matriz  b
+        for (int i = 0; i < filasB; i++)
+        {
+            matrizB[i] = new int[columnaB]; // reservando memoria  para las columnas
+        }
+
+        cout << "Matriz 1  " << endl;
+        for (int i = 0; i < filasA; i++)
+        {
+            for (int j = 0; j < columnaA; j++)
+            {
+                cout << "Digite un numero [" << i << "][" << j << "] : ";
+                cin >> *(*(matrizA + i) + j);
+            }
+        }
+        cout << " " << endl;
+        cout << "Matriz 2  " << endl;
+        cout << " " << endl;
+        for (int i = 0; i < filasB; i++)
+        {
+            for (int j = 0; j < columnaB; j++)
+            {
+                cout << "Digite un numero [" << i << "][" << j << "] : ";
+                cin >> *(*(matrizB + i) + j);
+            }
+        }
+        cout << " " << endl;
+        mostrarMatrizSumar(matrizA, matrizB);
+        sumarMatriz(matrizA, matrizB, filasA, columnaB,columnaA);
+        mostrarMatrizFinal(matrizC, filasA, columnaB);
+    }
+    else {
+        cout << "Error";
+    }
+   
+}
+
+void mostrarMatrizSumar(int** matrizA, int** matrizB)
+{
+
+    for (int i = 0; i < filasA; i++)
+    {
+        for (int j = 0; j < columnaA; j++)
+        {
+            cout << "	" << *(*(matrizA + i) + j) << "	 ";
+        }
+        cout << "\n";
+    }
+    cout << " " << endl;
+    cout << "	+	 " << endl;
+    cout << " " << endl;
+    for (int i = 0; i < filasB; i++)
+    {
+        for (int j = 0; j < columnaB; j++)
+        {
+            cout << "	" << *(*(matrizB + i) + j) << "	";
+        }
+        cout << "\n";
+    }
+}
+void sumarMatriz(int** matrizA, int** matrizB, int filasA, int columnaB,int columnasA)
+{
+    matrizC = new int* [filasA];
+    // matriz  b
+    for (int i = 0; i < filasA; i++)
+    {
+        matrizC[i] = new int[columnaB]; // reservando memoria  para las columnas
+    }
+
+    for (int i = 0; i < filasA; i++)
+    {
+        for (int j = 0; j < columnaB; j++)
+        {
+            (* (*(matrizC + i) + j) = 0);
+            for (int k = 0; k < columnasA; k++)
+            {
+                *(*(matrizC + i) + j) += ( * (*(matrizA + i) + k)) *( * (*(matrizB + k) + j));
+            }
+        }
+    }
+}
+
+void mostrarMatrizFinal(int** matrizC, int filasA, int columnaB)
+{
+    cout << " " << endl;
+    cout << "---------------------------------------------" << endl;
+    cout << "------LA Multiplicacion DE  MATRIZ A    *  MATRIZ  B ----" << endl;
+    cout << "---------------------------------------------" << endl;
+    for (int i = 0; i < filasA; i++)
+    {
+        for (int j = 0; j < columnaB; j++)
+        {
+
+            cout << "	" << *(*(matrizC + i) + j) << "  ";
+        }
+        cout << "\n";
+    }
+}
